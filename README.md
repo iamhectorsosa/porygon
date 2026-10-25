@@ -1,5 +1,7 @@
 # Porygon 🔺
 
+![Porygon Demo](./demo.gif)
+
 Porygon is a dead simple CLI tool that maps a codebase into a single, LLM-friendly text output: a directory tree followed by the contents of your source files.
 
 Ideal for pasting a project into an AI chat, or piping it into other tools.
