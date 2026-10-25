@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/iamhectorsosa/porygon/internal/mapper"
 	"github.com/iamhectorsosa/porygon/internal/render"
 	"github.com/urfave/cli/v3"
@@ -41,15 +42,19 @@ func app() *cli.Command {
 				Dir:     cmd.String("dir"),
 				Include: cmd.StringSlice("include"),
 			}
-			return run(cfg, cmd.Root().Writer)
+			return run(cfg, cmd.Root().Writer, os.Stderr)
 		},
 	}
 }
 
-func run(cfg mapper.Options, stdout io.Writer) error {
-	res, err := mapper.Map(cfg)
+func run(cfg mapper.Options, stdout, stderr io.Writer) error {
+	final, err := tea.NewProgram(newModel(cfg), tea.WithOutput(stderr)).Run()
 	if err != nil {
 		return err
 	}
-	return render.Write(stdout, res)
+	m := final.(model)
+	if m.err != nil {
+		return m.err
+	}
+	return render.Write(stdout, m.res)
 }
