@@ -27,20 +27,12 @@ Or from source:
 ```
 git clone https://github.com/iamhectorsosa/porygon.git
 cd porygon
-go build -o porygon
+go install
 ```
 
 ## Usage
 
 ### Basic Usage
-
-```
-porygon
-```
-
-Maps the current directory.
-
-### Examples
 
 ```
 # Map a specific directory
